@@ -151,7 +151,7 @@ foreach my $bal (
 	my $aud  = $bal->{$curr}->{audbalance};
 	my $rate = $bal->{$curr}->{rate};
 	say sprintf(
-		'-- %-2s	 $%-10s 	(%s)|size=14 href="https://www.coinspot.com.au/my/wallet/\%s/dashboard" terminal=false trim=false font="%s"',
+		'-- %-2s	 $%-10s 	(%s)|size=14 href="https://www.coinspot.com.au/my/wallet/%s/dashboard" terminal=false trim=false font="%s"',
 		$curr,
 		$nf->format_price( $aud, 2 ),
 		$rate < $tiny_format_below ? sprintf( '%.6f', $rate ) : $nf->format_number( $rate, 4 ),
