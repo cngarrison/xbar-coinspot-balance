@@ -30,7 +30,7 @@ use Number::Format;
 #$ENV{MOJO_CLIENT_DEBUG} = 1;
 
 
-my $darkmode = (exists $ENV{XBARDarkMode} && $ENV{XBARDarkMode} eq 'true') ? 1 : 0;
+my $darkmode = ( exists $ENV{XBARDarkMode} && $ENV{XBARDarkMode} eq 'true' ) ? 1 : 0;
 
 my $coinspot_logo_dark =
   'iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAACXBIWXMAABYlAAAWJQFJUiTwAAAHi2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNi4wLWMwMDYgNzkuMTY0NzUzLCAyMDIxLzAyLzE1LTExOjUyOjEzICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiBwaG90b3Nob3A6SUNDUHJvZmlsZT0ic1JHQiBJRUM2MTk2Ni0yLjEiIHhtcDpNb2RpZnlEYXRlPSIyMDIxLTA0LTE0VDEyOjQ2OjQxKzEwOjAwIiB4bXA6TWV0YWRhdGFEYXRlPSIyMDIxLTA0LTE0VDEyOjQ2OjQxKzEwOjAwIiB4bXA6Q3JlYXRlRGF0ZT0iMjAyMS0wNC0xNFQxMTo1Mjo0NSsxMDowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6YzA1NmQ0ODAtNGJkZC00NDMxLTliYTktOWU2NDlmMWNiNmYxIiB4bXBNTTpEb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6MWE0OGNjY2YtOWYzNy1jNTQ5LThmNzAtNjgxMjMzNzAwNGNkIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6OWU0MzU1YTAtZmRkMS00NDU2LWFkZDAtNmIwOGQ5YzY4NDM2IiB0aWZmOkltYWdlV2lkdGg9IjUwNCIgdGlmZjpJbWFnZUxlbmd0aD0iNTA0IiB0aWZmOlJlc29sdXRpb25Vbml0PSIyIiBleGlmOkNvbG9yU3BhY2U9IjEiIGV4aWY6UGl4ZWxYRGltZW5zaW9uPSI1MDQiIGV4aWY6UGl4ZWxZRGltZW5zaW9uPSI1MDQiPiA8ZGM6dGl0bGU+IDxyZGY6QWx0PiA8cmRmOmxpIHhtbDpsYW5nPSJ4LWRlZmF1bHQiPmNvaW5zcG90PC9yZGY6bGk+IDwvcmRmOkFsdD4gPC9kYzp0aXRsZT4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0icHJvZHVjZWQiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFmZmluaXR5IERlc2lnbmVyIDEuOS4zIiBzdEV2dDp3aGVuPSIyMDIxLTA0LTE0VDEyOjEwOjM3KzEwOjAwIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo5ZTQzNTVhMC1mZGQxLTQ0NTYtYWRkMC02YjA4ZDljNjg0MzYiIHN0RXZ0OndoZW49IjIwMjEtMDQtMTRUMTI6NDY6NDErMTA6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCAyMi4zIChNYWNpbnRvc2gpIiBzdEV2dDpjaGFuZ2VkPSIvIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDpjMDU2ZDQ4MC00YmRkLTQ0MzEtOWJhOS05ZTY0OWYxY2I2ZjEiIHN0RXZ0OndoZW49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';
@@ -66,7 +66,7 @@ if ( !$api_key || !$api_secret ) {
 chomp $api_key;
 chomp $api_secret;
 
-my $total_in_bar = (exists $ENV{VAR_TOTAL_IN_BAR} && $ENV{VAR_TOTAL_IN_BAR} eq 'true') ? 1 : 0;
+my $total_in_bar = ( exists $ENV{VAR_TOTAL_IN_BAR} && $ENV{VAR_TOTAL_IN_BAR} eq 'true' ) ? 1 : 0;
 #say np($total_in_bar);
 
 my $coins_font = $ENV{VAR_COINS_FONT} || 'Menlo';
@@ -82,6 +82,8 @@ my @fav_coins =
   );
 #say np(@fav_coins);
 
+my $tiny_format_below = 1.0e-3;
+
 my $nonce   = int( time * 1000000 );
 my $payload = "{\"nonce\":$nonce}";
 
@@ -96,7 +98,7 @@ my $headers = {
 };
 
 my $ua = Mojo::UserAgent->new;
-my $nf = Number::Format->new( -int_curr_symbol => '' ); # put $ sign directly into sprintf since Number::Format puts space between symbol and number
+my $nf = Number::Format->new( -int_curr_symbol => '' );    # put $ sign directly into sprintf since Number::Format puts space between symbol and number
 
 my $res      = $ua->post( 'https://www.coinspot.com.au/api/ro/my/balances' => $headers => $payload )->result->json;
 my $balances = $res->{balances};
@@ -125,7 +127,11 @@ foreach my $fav (@fav_coins) {
 		'%s	$%-10s 	(%s)|size=16 href="https://www.coinspot.com.au/my/wallet/%s/dashboard" terminal=false trim=false font="%s"',
 		$fav->[1],
 		$nf->format_price( $fav_coin->{ $fav->[0] }->{audbalance}, 2 ),
-		$nf->format_number( $fav_coin->{ $fav->[0] }->{rate}, 3 ),
+		(
+			$fav_coin->{ $fav->[0] }->{rate} < $tiny_format_below
+			? sprintf( '%.6f', $fav_coin->{ $fav->[0] }->{rate} )
+			: $nf->format_number( $fav_coin->{ $fav->[0] }->{rate}, 3 )
+		),
 		lc $fav->[0],
 		$coins_font,
 	);
@@ -148,7 +154,7 @@ foreach my $bal (
 		'-- %-2s	 $%-10s 	(%s)|size=14 href="https://www.coinspot.com.au/my/wallet/\%s/dashboard" terminal=false trim=false font="%s"',
 		$curr,
 		$nf->format_price( $aud, 2 ),
-		$nf->format_number( $rate, 4 ),
+		$rate < $tiny_format_below ? sprintf( '%.6f', $rate ) : $nf->format_number( $rate, 4 ),
 		lc $curr,
 		$coins_font,
 	);
